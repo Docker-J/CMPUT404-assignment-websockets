@@ -132,6 +132,8 @@
         world[entity] = data;
         drawNextFrame(); // (but should we?)
         //XXX: Send a XHTML Request that updates the entity you just modified!
+        socket.send(JSON.stringify({ [entity]: data }));
+        drawNextFrame(); // (but should we?)
       }
       var counter = 0;
       function addEntityWithoutName(data) {
@@ -268,9 +270,9 @@
             //XXX: TODO What are you going to do here?
             var json_msg = JSON.parse(msg.data);
             for (key in json_msg) {
-              wolrd[key] = json_msg[key];
+              world[key] = json_msg[key];
+              drawNextFrame();
             }
-            drawFrame();
           } catch (e) {
             alert("socket on message: " + e);
           }
