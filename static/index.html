@@ -58,11 +58,12 @@
           arc(
             x,
             y,
-            entity["radius"] ? entity["radius"] : 50,
+            entity["radius"] ? entity["radius"] : 30,
             0,
             2.0 * Math.PI,
             false
           );
+          fill();
           stroke();
         }
       }
@@ -72,7 +73,7 @@
           entity["colour"] = "#FF0000";
         }
         if (!entity["radius"]) {
-          entity["radius"] = 50;
+          entity["radius"] = 30;
         }
         return entity;
       }
@@ -240,15 +241,15 @@
       // Add the application specific mouse listeners!
       //XXX: TODO Make these prettier!
       mouse.mousedowners.push(function (x, y, clicked, e) {
-        addEntityWithoutName({ x: x, y: y, colour: "blue" });
+        addEntityWithoutName({ x: x, y: y, colour: "#AEC6CF" });
       });
 
       mouse.mouseuppers.push(function (x, y, clicked, e) {
-        addEntityWithoutName({ x: x, y: y, colour: "red" });
+        addEntityWithoutName({ x: x, y: y, colour: "#FF6961" });
       });
 
       mouse.mousedraggers.push(function (x, y, clicked, e) {
-        addEntityWithoutName({ x: x, y: y, colour: "green", radius: 10 });
+        addEntityWithoutName({ x: x, y: y, colour: "#77DD77", radius: 8 });
       });
 
       function update() {

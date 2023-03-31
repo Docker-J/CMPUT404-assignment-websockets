@@ -26,6 +26,10 @@ app = Flask(__name__)
 sockets = Sockets(app)
 app.debug = True
 
+
+# From
+# https://github.com/abramhindle/WebSocketsExamples/blob/master/broadcaster.py
+# By Abram Hindle
 clients = list()
 
 def send_all(msg):
@@ -44,6 +48,7 @@ class Client:
 
     def get(self):
         return self.queue.get()
+####
     
 class World:
     def __init__(self):
@@ -92,7 +97,9 @@ def hello():
     '''Return something coherent here.. perhaps redirect to /static/index.html '''
     return redirect('static/index.html')
 
-
+# From
+# https://github.com/abramhindle/WebSocketsExamples/blob/master/broadcaster.py
+# By Abram Hindle
 def read_ws(ws,client):
     '''A greenlet function that reads from the websocket and updates the world'''
     # XXX: TODO IMPLEMENT ME
@@ -113,6 +120,9 @@ def read_ws(ws,client):
         
     return None
 
+# From
+# https://github.com/abramhindle/WebSocketsExamples/blob/master/broadcaster.py
+# By Abram Hindle
 @sockets.route('/subscribe')
 def subscribe_socket(ws):
     '''Fufill the websocket URL of /subscribe, every update notify the
@@ -123,9 +133,7 @@ def subscribe_socket(ws):
     g = gevent.spawn(read_ws, ws, client)
 
     try:
-        # First send the world whole world, then send changes
-        # As they arrive
-        # ws.send(json.dumps(myWorld.space))
+        ws.send(json.dumps(myWorld.world()))
         while True:
             # block here
             msg = client.get()
@@ -167,8 +175,6 @@ def world():
 def get_entity(entity):
     '''This is the GET version of the entity interface, return a representation of the entity'''
     return json.dumps(myWorld.get(entity=entity))
-
-
 
 @app.route("/clear", methods=['POST','GET'])
 def clear():
